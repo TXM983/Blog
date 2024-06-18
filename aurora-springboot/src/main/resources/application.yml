@@ -1,0 +1,110 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/aurora?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: ###
+    password: ###
+    hikari:
+      minimum-idle: 10
+      idle-timeout: 180000
+      maximum-pool-size: 100
+      auto-commit: true
+      pool-name: MyHikariCP
+      max-lifetime: 60000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: ###
+    database: 0
+    lettuce:
+      pool:
+        min-idle: 10
+        max-idle: 100
+        max-active: 100
+        max-wait: 10000
+
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: ###
+    password: ###
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 3000
+    connection-timeout: 5000
+
+  elasticsearch:
+    rest:
+      uris: 127.0.0.1:9200
+
+  mail:
+    host: smtp.qq.com
+    username: qq号
+    password:   #qq邮箱发送邮件授权码
+    default-encoding: UTF-8
+    protocol: smtp
+    port: 465
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+            required: true
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+search:
+  mode: elasticsearch
+
+upload:
+  mode: oss
+  oss:
+    url: 访问域名
+    endpoint: 域名
+    accessKeyId: 自己的阿里云accessKeyId
+    accessKeySecret: 自己阿里云accessKeySecret
+    bucketName: 自己的仓库名
+  minio:
+    url: http://127.0.0.1:9000/
+    endpoint: http://127.0.0.1:9000
+    accesskey: #####
+    secretKey: #####
+    bucketName: blog
+
+website:
+  url: https://www.aimiliy.top
+
+qq:
+  app-id: QQ APPID
+  check-token-url: https://graph.qq.com/oauth2.0/me?access_token={access_token}
+  user-info-url: https://graph.qq.com/user/get_user_info?openid={openid}&access_token={access_token}&oauth_consumer_key={oauth_consumer_key}
+
+
+logging:
+  level:
+    org.springframework.amqp: debug
